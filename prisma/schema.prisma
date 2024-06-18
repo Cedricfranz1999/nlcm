@@ -21,20 +21,20 @@ model Post {
 
 
 
-model members{
+model Members{
     id                         Int      @id @default(autoincrement())
     firstName                  String
     middleName                 String?
     lastName                   String
-    dateofBirth                String
-    gender                     TaskStatus
+    dateofBirth                DateTime
+    gender                     GENDER
     placeOfbirth               String
     permanentAddress           String?
     presentAddress             String?
-    contactNumber              String
-    email                      String
-    maritalStatus              String
-    educationalAttainment      String?
+    contactNumber              String?
+    email                      String?
+    maritalStatus              MaritalStatus?
+    educationalAttainment      EducationalAttainment?
     currentJob                 String?
     birthOrder                 String?
     mother                     String?
@@ -42,10 +42,28 @@ model members{
     citizenship                String?    @default("Filipino")
     wife                       String?  // optional
     children                   String[] // optional
+    
                       
 }
 
-enum TaskStatus {
+enum GENDER {
     MALE
     FEMALE
+}
+
+enum MaritalStatus {
+    SINGLE
+    MARRIED
+    WIDOWED 
+    DIVORCED
+    SEPARATED
+}
+
+enum EducationalAttainment {
+  
+PRESCHOOL
+ELEMENTARY
+HIGHSCHOOL
+SENIORHIGH
+COLLEGE
 }
