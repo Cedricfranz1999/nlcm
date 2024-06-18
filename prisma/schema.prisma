@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Post {
+    id        Int      @id @default(autoincrement())
+    name      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([name])
+}
+
+
+
+model members{
+    id                         Int      @id @default(autoincrement())
+    firstName                  String
+    middleName                 String?
+    lastName                   String
+    dateofBirth                String
+    gender                     TaskStatus
+    placeOfbirth               String
+    permanentAddress           String?
+    presentAddress             String?
+    contactNumber              String
+    email                      String
+    maritalStatus              String
+    educationalAttainment      String?
+    currentJob                 String?
+    birthOrder                 String?
+    mother                     String?
+    father                     String?
+    citizenship                String?    @default("Filipino")
+    wife                       String?  // optional
+    children                   String[] // optional
+                      
+}
+
+enum TaskStatus {
+    MALE
+    FEMALE
+}
