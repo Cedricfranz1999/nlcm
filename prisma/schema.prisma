@@ -22,30 +22,78 @@ model Post {
 
 
 model Members{
+    
     id                         Int      @id @default(autoincrement())
+    image                      String?
+    lastName                   String
     firstName                  String
     middleName                 String?
-    lastName                   String
+    fatherLastName             String?
+    fatherFirstName            String?
+    fatherMiddleName           String?
+    motherLastName             String?
+    motherFirstName            String?
+    motherMiddleName           String?
     dateofBirth                DateTime
-    gender                     GENDER
     placeOfbirth               String
-    permanentAddress           String?
+    sex                        GENDER
+    height                     String?
+    weight                     String?
     presentAddress             String?
-    contactNumber              String?
-    email                      String?
+    occupation                 String?
     maritalStatus              MaritalStatus?
+    bloodType                  String?
+    jobExperience              String[]
+    cellphoneNumber            String?
+    homeTelephoneNumber        String?
+    email                      String?
     educationalAttainment      EducationalAttainment?
-    currentJob                 String?
+    spouseCompleteName         String?
+    nameOfChildrenAndAge       String[]
     birthOrder                 String?
-    mother                     String?
-    father                     String?
     citizenship                String?    @default("Filipino")
-    wife                       String?  // optional
-    children                   String[] // optional
-    
-                      
+    previousReligion           String?
+    dateAcceptedTheLord        DateTime?
+    personLedYouToTheLord      String?
+    firstDayOfChurchAttendance String?
+    dateWaterBaptized          String?
+    dateSpiritBaptized         String?
+    attendance                 AttendanceMembers[]
+    formFilledUpBy             FormFilledUpBy?
+
+                     
 }
 
+model FormFilledUpBy {
+    id                         Int      @id @default(autoincrement())
+    formFilledUpBy             String?
+    dateFilledUp               DateTime?
+    idNo                       String?
+    verified                   String?
+    noted                      String?
+    encoded                    String?
+
+    memberId                   Int?      @unique
+    member                     Members?  @relation(fields: [memberId], references: [id])
+    
+}
+
+model Attendance {
+    id                         Int      @id @default(autoincrement())
+    attendanceName             String   @default("SundayService")
+    date                       DateTime
+    members                    AttendanceMembers[]
+}
+model AttendanceMembers {
+    id                         Int      @id @default(autoincrement())
+    memberId                   Int
+    attendanceId               Int
+
+    member                     Members   @relation(fields: [memberId], references: [id])
+    attendance                 Attendance @relation(fields: [attendanceId], references: [id])
+
+    @@unique([memberId, attendanceId])
+}
 enum GENDER {
     MALE
     FEMALE
