@@ -2,20 +2,17 @@ import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { EllipsisVertical, Trash, Eye, Bolt } from "lucide-react";
+import { useNavigation } from "react-day-picker";
+import { useRouter } from "next/navigation";
 
-export function DropdownMenuDemo() {
+export function DropdownMenuDemo({ id }: { id: number }) {
+  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -23,13 +20,17 @@ export function DropdownMenuDemo() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="  w-32">
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          View more
+        <DropdownMenuItem
+          onClick={() => router.push(`/admin/members/profile/${id}`)}
+        >
+          view more
           <DropdownMenuShortcut>
             <Eye size={15} />
           </DropdownMenuShortcut>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => router.push(`/admin/members/edit/${id}`)}
+        >
           Edit
           <DropdownMenuShortcut>
             <Bolt size={15} />

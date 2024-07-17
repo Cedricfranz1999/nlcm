@@ -12,4 +12,21 @@ export const membersRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       return ctx.db.members.findMany();
     }),
+
+  getAllmembersById: publicProcedure
+    .input(
+      z.object({
+        userId: z.number().optional(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      return ctx.db.members.findFirst({
+        where: {
+          id: input.userId,
+        },
+        include: {
+          formFilledUpBy: true,
+        },
+      });
+    }),
 });

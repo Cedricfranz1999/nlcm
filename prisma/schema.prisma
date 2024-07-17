@@ -43,13 +43,17 @@ model Members{
     occupation                 String?
     maritalStatus              MaritalStatus?
     bloodType                  String?
-    jobExperience              String[]
+    jobExperience              Json?
     cellphoneNumber            String?
     homeTelephoneNumber        String?
     email                      String?
     educationalAttainment      EducationalAttainment?
-    spouseCompleteName         String?
-    nameOfChildrenAndAge       String[]
+    spouseLastName             String?
+    spouseFirstName            String?
+    spouseMiddleName           String?
+
+
+    nameOfChildrenAndAge       Json?
     birthOrder                 String?
     citizenship                String?    @default("Filipino")
     previousReligion           String?
