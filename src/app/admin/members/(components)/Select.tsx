@@ -9,11 +9,17 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
-const SelectDropdown = () => {
+const SelectDropdownBloodType = ({
+  blood,
+  field,
+}: {
+  blood: string;
+  field: any;
+}) => {
   return (
-    <Select>
+    <Select value={field.value} onValueChange={field.onChange}>
       <SelectTrigger className="w-[150px]">
-        <SelectValue placeholder=" blood type" />
+        <SelectValue placeholder={blood} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
@@ -36,4 +42,4 @@ const SelectDropdown = () => {
   );
 };
 
-export default SelectDropdown;
+export default SelectDropdownBloodType;

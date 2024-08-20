@@ -9,9 +9,9 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
-const SelectCitizenship = () => {
+const SelectCitizenship = ({ field }: { field: any }) => {
   return (
-    <Select>
+    <Select value={field.value} onValueChange={field.onChange}>
       <SelectTrigger className="w-[150px]">
         <SelectValue placeholder={"Filipino"} />
       </SelectTrigger>

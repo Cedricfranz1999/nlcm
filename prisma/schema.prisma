@@ -59,9 +59,9 @@ model Members{
     previousReligion           String?
     dateAcceptedTheLord        DateTime?
     personLedYouToTheLord      String?
-    firstDayOfChurchAttendance String?
-    dateWaterBaptized          String?
-    dateSpiritBaptized         String?
+    firstDayOfChurchAttendance DateTime?
+    dateWaterBaptized          DateTime?
+    dateSpiritBaptized         DateTime?
     attendance                 AttendanceMembers[]
     formFilledUpBy             FormFilledUpBy?
 
@@ -118,4 +118,5 @@ ELEMENTARY
 HIGHSCHOOL
 SENIORHIGH
 COLLEGE
+DEGREE_HOLDER
 }

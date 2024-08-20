@@ -31,7 +31,7 @@ const FormSchema = z.object({
   }),
 });
 
-const CalendarCustom = () => {
+const CalendarCustom = ({ field }: { field: any }) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -53,7 +53,7 @@ const CalendarCustom = () => {
         <FormField
           control={form.control}
           name="dob"
-          render={({ field }) => (
+          render={({ field: fielduplicate }) => (
             <FormItem className="flex flex-col">
               <Popover>
                 <PopoverTrigger asChild>

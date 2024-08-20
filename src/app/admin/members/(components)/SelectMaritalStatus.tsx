@@ -9,20 +9,26 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
-const SelectMaritalStatus = () => {
+const SelectMaritalStatus = ({
+  status,
+  field,
+}: {
+  status: string;
+  field: any;
+}) => {
   return (
-    <Select>
+    <Select value={field.value} onValueChange={field.onChange}>
       <SelectTrigger className="w-[200px]">
-        <SelectValue placeholder="Select marital status" />
+        <SelectValue placeholder={status} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Blood Type</SelectLabel>
-          <SelectItem value="A">SINGLE</SelectItem>
-          <SelectItem value="B">MARRIED</SelectItem>
-          <SelectItem value="AB">WINDOWED</SelectItem>
-          <SelectItem value="O">DIVORCED</SelectItem>
-          <SelectItem value="O">SEPARATED</SelectItem>
+          <SelectLabel> Marital status</SelectLabel>
+          <SelectItem value="SINGLE">SINGLE</SelectItem>
+          <SelectItem value="MARRIED">MARRIED</SelectItem>
+          <SelectItem value="WINDOWED">WINDOWED</SelectItem>
+          <SelectItem value="DIVORCED">DIVORCED</SelectItem>
+          <SelectItem value="SEPARATED">SEPARATED</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

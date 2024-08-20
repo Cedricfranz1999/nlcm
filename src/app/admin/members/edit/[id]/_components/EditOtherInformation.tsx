@@ -6,10 +6,13 @@ import { RouterOutputs } from "~/trpc/react";
 type ProjectMembers = RouterOutputs["members"]["getAllmembersById"];
 import { db } from "~/server/db";
 import dayjs from "dayjs";
+import { Input } from "~/components/ui/input";
 
-const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
-  console.log("WOSSSHIE ", data?.nameOfChildrenAndAge);
-
+const EditOtherInformation = ({
+  data,
+}: {
+  data: ProjectMembers | undefined;
+}) => {
   const formatDate = (
     date: string | Date | undefined,
   ): { formattedDate: string; age: number } => {
@@ -31,7 +34,7 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
       </div>
       <div className=" flex items-center gap-5">
         <div className=" flex   flex-col">
-          <div className="    flex w-72     whitespace-nowrap">
+          <div className="    flex whitespace-nowrap">
             {" "}
             <Label className=" mr-5   text-2xl font-semibold  tracking-wider">
               {" "}
@@ -39,87 +42,124 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
             </Label>
           </div>
         </div>
-        <div className=" flex   flex-col">
-          <Label className="  text-gray-400">Lastname</Label>
-          <Label className=" text-2xl  font-light tracking-wider">
-            {" "}
-            {data?.fatherLastName ? data.fatherLastName : <DataNotFound />}
-          </Label>
+        <div className=" flex   flex-col gap-3">
+          <Label className="  text-gray-400">Lastname</Label>{" "}
+          {data?.fatherLastName ? (
+            <Input
+              placeholder={data?.fatherLastName || ""}
+              className=" text-md  font-light tracking-wider"
+            />
+          ) : (
+            <DataNotFound />
+          )}
         </div>
-        <div className=" flex   flex-col">
-          <Label className="  text-gray-400">Firstname</Label>
-          <Label className=" text-2xl  font-light tracking-wider">
-            {" "}
-            {data?.fatherFirstName ? data.fatherFirstName : <DataNotFound />}
-          </Label>
+        <div className=" flex   flex-col gap-3">
+          <Label className="  text-gray-400">Firstname</Label>{" "}
+          {data?.fatherFirstName ? (
+            <Input
+              placeholder={data?.fatherFirstName || ""}
+              className=" text-md  font-light tracking-wider"
+            />
+          ) : (
+            <DataNotFound />
+          )}
         </div>
-        <div className=" flex   flex-col">
+        <div className=" flex   flex-col gap-3">
           <Label className="  text-gray-400">MiddleName</Label>
-          <Label className=" text-2xl  font-light tracking-wider">
-            {" "}
-            {data?.fatherMiddleName ? data.fatherMiddleName : <DataNotFound />}
-          </Label>
+          {data?.fatherMiddleName ? (
+            <Input
+              placeholder={data?.middleName || ""}
+              className=" text-md  font-light tracking-wider"
+            />
+          ) : (
+            <DataNotFound />
+          )}
         </div>
       </div>
       <div className=" flex items-center gap-5">
         <div className=" flex   flex-col">
-          <div className="    flex w-72     whitespace-nowrap">
+          <div className="    flex    whitespace-nowrap">
             {" "}
-            <Label className=" mr-5   text-2xl font-semibold  tracking-wider">
+            <Label className=" mr-3   text-2xl font-semibold  tracking-wider">
               {" "}
               Mothers Name:
             </Label>
           </div>
         </div>
-        <div className=" flex   flex-col">
+        <div className=" flex   flex-col gap-3">
           <Label className="  text-gray-400">Lastname</Label>
-          <Label className=" text-2xl  font-light tracking-wider">
-            {" "}
-            {data?.motherLastName ? data.motherLastName : <DataNotFound />}
-          </Label>
+          {data?.motherLastName ? (
+            <Input
+              placeholder={data?.motherLastName || ""}
+              className=" text-md  font-light tracking-wider"
+            />
+          ) : (
+            <DataNotFound />
+          )}
         </div>
-        <div className=" flex   flex-col">
+        <div className=" flex   flex-col gap-3">
           <Label className="  text-gray-400">Firstname</Label>
-          <Label className=" text-2xl  font-light tracking-wider">
-            {" "}
-            {data?.motherFirstName ? data.motherFirstName : <DataNotFound />}
-          </Label>
+          {data?.motherFirstName ? (
+            <Input
+              placeholder={data?.motherFirstName || ""}
+              className=" text-md  font-light tracking-wider"
+            />
+          ) : (
+            <DataNotFound />
+          )}
         </div>
-        <div className=" flex   flex-col">
+        <div className=" flex   flex-col gap-3">
           <Label className="  text-gray-400">MiddleName</Label>
-          <Label className=" text-2xl  font-light tracking-wider">
-            {data?.middleName ? data.middleName : <DataNotFound />}
-          </Label>
+          {data?.fatherLastName ? (
+            <Input
+              placeholder={data?.motherLastName || ""}
+              className=" text-md  font-light tracking-wider"
+            />
+          ) : (
+            <DataNotFound />
+          )}
         </div>
       </div>
       <div className=" flex items-center gap-5">
-        <div className="    flex w-72     whitespace-nowrap">
+        <div className=" whitespace-nowrap">
           {" "}
           <Label className=" mr-5   text-2xl font-semibold  tracking-wider">
             {" "}
             Spouse Name:
           </Label>
         </div>
-        <div className=" flex   flex-col">
+        <div className=" flex   flex-col gap-3">
           <Label className="  text-gray-400">Lastname</Label>
-          <Label className=" text-2xl  font-light tracking-wider">
-            {" "}
-            {data?.spouseLastName}
-          </Label>
+          {data?.spouseLastName ? (
+            <Input
+              placeholder={data?.spouseLastName || ""}
+              className=" text-md  font-light tracking-wider"
+            />
+          ) : (
+            <DataNotFound />
+          )}
         </div>
-        <div className=" flex   flex-col">
+        <div className=" flex   flex-col gap-3">
           <Label className="  text-gray-400">Firstname</Label>
-          <Label className=" text-2xl  font-light tracking-wider">
-            {" "}
-            {data?.spouseFirstName}
-          </Label>
+          {data?.spouseFirstName ? (
+            <Input
+              placeholder={data?.spouseFirstName || ""}
+              className=" text-md  font-light tracking-wider"
+            />
+          ) : (
+            <DataNotFound />
+          )}
         </div>
-        <div className=" flex   flex-col">
+        <div className=" flex   flex-col gap-3">
           <Label className="  text-gray-400">MiddleName</Label>
-          <Label className=" text-2xl  font-light tracking-wider">
-            {" "}
-            {data?.spouseMiddleName}
-          </Label>
+          {data?.spouseMiddleName ? (
+            <Input
+              placeholder={data?.spouseMiddleName || ""}
+              className=" text-md  font-light tracking-wider"
+            />
+          ) : (
+            <DataNotFound />
+          )}
         </div>
       </div>
       {/* list of children */}
@@ -142,45 +182,48 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
               lastName: string;
               middleName: string;
             }[]
-          )?.map((child, index) => (
-            <div
-              className={`bg-red-20 flex items-center gap-5 ${child.firstName && child.lastName ? "" : "hidden"}`}
-            >
-              <div className="    List of Childrens flex w-72     whitespace-nowrap">
+          )?.map((child) => (
+            <div className=" bg-red mt-6 flex items-center gap-5">
+              <div className="    List of Childrens flex    whitespace-nowrap">
                 {" "}
                 <Label className="  ml-4 text-xl font-medium  tracking-widest">
                   {" "}
-                  Birth Order{index + 1}:
+                  Birth Order{child.id}:
                 </Label>
               </div>
-              <div className=" flex   flex-col">
+              <div className=" flex   flex-col gap-3">
                 <Label className="  text-gray-400">Lastname</Label>
-                <Label className=" text-2xl  font-light tracking-wider">
-                  {" "}
-                  {child.lastName}
-                </Label>
+                {child.lastName ? (
+                  <Input
+                    placeholder={child.lastName || ""}
+                    className=" text-md  font-light tracking-wider"
+                  />
+                ) : (
+                  <DataNotFound />
+                )}
               </div>
-              <div className=" flex   flex-col">
+              <div className=" flex   flex-col gap-3">
                 <Label className="  text-gray-400">Firstname</Label>
-                <Label className=" text-2xl  font-light tracking-wider">
-                  {" "}
-                  {child.firstName}
-                </Label>
+                {child.firstName ? (
+                  <Input
+                    placeholder={child?.firstName || ""}
+                    className=" text-md  font-light tracking-wider"
+                  />
+                ) : (
+                  <DataNotFound />
+                )}
               </div>
               <div className=" flex   flex-col">
                 <Label className="  text-gray-400">MiddleName</Label>
-                <Label className=" text-2xl  font-light tracking-wider">
-                  {" "}
-                  {child.middleName}
-                </Label>
+                {child.middleName ? (
+                  <Input
+                    placeholder={child.middleName || ""}
+                    className=" text-md  font-light tracking-wider"
+                  />
+                ) : (
+                  <DataNotFound />
+                )}
               </div>
-              {/* <div className=" mx-4   flex  flex-col ">
-                <Label className="  text-gray-400">Age</Label>
-                <Label className=" text-2xl  font-light tracking-wider">
-                  {" "}
-                  {child.age}
-                </Label>
-              </div> */}
             </div>
           ))}
         </div>
@@ -188,9 +231,9 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
         <p></p>
       )}
       {data?.nameOfChildrenAndAge ? (
-        <div className={` $ mt-10   `}>
+        <div className=" mt-10  ">
           <div className=" flex items-center gap-5 ">
-            <div className="    flex  w-72    whitespace-nowrap">
+            <div className="    flex     whitespace-nowrap">
               {" "}
               <Label className=" mr-5   text-2xl font-semibold  tracking-wider">
                 {" "}
@@ -201,13 +244,11 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
           {(
             data?.jobExperience as {
               id: number;
-              description: string;
+              experience: string;
             }[]
           )?.map((experience) => (
-            <div
-              className={` flex items-center gap-5  ${experience.description ? "" : "hidden"} `}
-            >
-              <div className="    List of Childrens flex w-72     whitespace-nowrap">
+            <div className=" mt-6 flex items-center gap-4">
+              <div className="    List of Childrens   flex    whitespace-nowrap">
                 {" "}
                 <Label className="  ml-4 text-xl font-medium  tracking-widest">
                   {" "}
@@ -215,10 +256,14 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
                 </Label>
               </div>
               <div className=" flex   flex-col">
-                <Label className=" text-2xl  font-light tracking-wider">
-                  {" "}
-                  {experience.description}
-                </Label>
+                {experience ? (
+                  <Input
+                    placeholder={experience.experience || ""}
+                    className=" text-md  font-light tracking-wider"
+                  />
+                ) : (
+                  <DataNotFound />
+                )}
               </div>
             </div>
           ))}
@@ -227,21 +272,25 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
         <p></p>
       )}
       <div className=" mt-6 flex items-center  gap-5">
-        <div className="    flex w-72     whitespace-nowrap">
+        <div className="    flex      whitespace-nowrap">
           <Label className=" mr-5   text-2xl font-semibold  tracking-wider">
             {" "}
             Previous religion{" "}
           </Label>
         </div>
         <div className=" flex   flex-col">
-          <Label className=" text-2xl  font-light tracking-wider">
-            {" "}
-            {data?.previousReligion ? data.previousReligion : <DataNotFound />}
-          </Label>
+          {data?.motherLastName ? (
+            <Input
+              placeholder={data?.previousReligion || ""}
+              className=" text-md  font-light tracking-wider"
+            />
+          ) : (
+            <DataNotFound />
+          )}
         </div>
       </div>
       <div className=" mt-6 flex items-center  gap-5">
-        <div className="    flex w-72     flex-col whitespace-nowrap">
+        <div className="    flex      flex-col whitespace-nowrap">
           <Label className=" mr-5  text-2xl font-semibold  tracking-wider">
             {" "}
             Person leads to
@@ -251,12 +300,10 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
           </Label>
         </div>
         {data?.personLedYouToTheLord ? (
-          <div className=" flex   flex-col">
-            <Label className=" text-2xl  font-light tracking-wider">
-              {" "}
-              Jae Libril
-            </Label>
-          </div>
+          <Input
+            placeholder={data?.motherLastName || ""}
+            className=" text-md  font-light tracking-wider"
+          />
         ) : (
           <DataNotFound />
         )}
@@ -378,4 +425,4 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
   );
 };
 
-export default OtherInformation;
+export default EditOtherInformation;
