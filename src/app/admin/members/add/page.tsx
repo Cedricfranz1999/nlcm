@@ -31,15 +31,18 @@ import {
 import SelectEducationAttainment from "../(components)/SelectEducationalAttainment";
 import { useToast } from "~/components/ui/use-toast";
 import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { toast } = useToast();
 
+  const router = useRouter();
   const addMember = api.members.addMember.useMutation({
     onSuccess: () => {
       toast({
         title: "Successfully added new member",
       });
+      router.push("/admin/members");
     },
   });
 
@@ -86,38 +89,39 @@ const page = () => {
       dateofBirth: data.dateofBirth ?? undefined,
       placeOfbirth: data.placeOfbirth ?? undefined,
       sex: data.sex,
-      weight: data.weight,
-      height: data.height,
-      bloodType: data.bloodType,
+      weight: data.weight ?? "",
+      height: data.height ?? "",
+      bloodType: data.bloodType ?? undefined,
       maritalStatus: data.maritalStatus,
       citizenship: data.citizenship || "FILIPINO",
-      cellphoneNumber: data.cellphoneNumber,
-      homeTelephoneNumber: data.homeTelephoneNumber,
-      email: data.email,
+      cellphoneNumber: data.cellphoneNumber ?? "",
+      homeTelephoneNumber: data.homeTelephoneNumber ?? "",
+      email: data.email ?? "",
       educationalAttainment: data.educationalAttainment,
       occupation: data.occupation || "",
       fatherFirstName: data.fatherFirstName,
       fatherMiddleName: data.fatherMiddleName,
       fatherLastName: data.fatherLastName,
-      motherFirstName: data.motherFirstName,
-      motherMiddleName: data.motherMiddleName,
-      motherLastName: data.motherLastName,
-      spouseFirstName: data.spouseFirstName,
-      spouseMiddleName: data.spouseMiddleName,
-      spouseLastName: data.spouseLastName,
+      motherFirstName: data.motherFirstName ?? "",
+      motherMiddleName: data.motherMiddleName ?? "",
+      motherLastName: data.motherLastName ?? "",
+      spouseFirstName: data.spouseFirstName ?? "",
+      spouseMiddleName: data.spouseMiddleName ?? "",
+      spouseLastName: data.spouseLastName ?? "",
       nameOfChildrenAndAge: data.nameOfChildrenAndAge,
       jobExperience: jobExperience,
-      previousReligion: data.previousReligion,
-      personLedYouToTheLord: data.personLedYouToTheLord,
+      previousReligion: data.previousReligion ?? "",
+      personLedYouToTheLord: data.personLedYouToTheLord ?? "",
       dateAcceptedTheLord: data.dateAcceptedTheLord ?? undefined,
       firstDayOfChurchAttendance: data.firstDayOfChurchAttendance ?? undefined,
       dateWaterBaptized: data.dateWaterBaptized ?? undefined,
       dateSpiritBaptized: data.dateSpiritBaptized ?? undefined,
-      formFilledUpBy: data.formFilledUpBy,
+      formFilledUpByWho: data.formFilledUpByWho ?? "",
       dateFilledUp: data.dateFilledUp ?? undefined,
-      verified: data.verified,
-      noted: data.noted,
-      encoded: data.encoded,
+      verified: data.verified ?? "",
+      noted: data.noted ?? "",
+      encoded: data.encoded ?? "",
+      presentAddress: data.presentAddress,
     });
 
     console.log("hello");
@@ -259,7 +263,7 @@ const page = () => {
                           <Label className="   text-gray-500">
                             Place of Birth
                           </Label>
-                          <Input {...field} />
+                          <Input {...field} value={field.value ?? ""} />{" "}
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -277,7 +281,7 @@ const page = () => {
                           <Label className="   text-gray-500">
                             Present Address
                           </Label>
-                          <Input {...field} />
+                          <Input {...field} value={field.value ?? ""} />{" "}
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -312,7 +316,12 @@ const page = () => {
                           <Label className="   text-gray-500">
                             Weight in KG
                           </Label>
-                          <Input type="number" {...field} className="  w-32" />
+                          <Input
+                            type="number"
+                            {...field}
+                            value={field.value ?? ""}
+                            className="  w-32"
+                          />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -330,7 +339,12 @@ const page = () => {
                           <Label className="   text-gray-500">
                             Height in FT
                           </Label>
-                          <Input type="number" {...field} className="  w-32" />
+                          <Input
+                            type="number"
+                            {...field}
+                            value={field.value ?? ""}
+                            className="  w-32"
+                          />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -403,7 +417,7 @@ const page = () => {
                       <FormControl>
                         <div className="  flex flex-1 flex-col gap-3">
                           <Label className="  text-gray-500">Mobile No.</Label>
-                          <Input {...field} />
+                          <Input {...field} value={field.value ?? ""} />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -421,7 +435,7 @@ const page = () => {
                           <Label className="  text-gray-500">
                             Telephone No.
                           </Label>
-                          <Input {...field} />
+                          <Input {...field} value={field.value ?? ""} />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -438,7 +452,7 @@ const page = () => {
                           <Label className="  text-gray-500">
                             Email Address:
                           </Label>
-                          <Input {...field} />
+                          <Input {...field} value={field.value ?? ""} />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -475,7 +489,7 @@ const page = () => {
                       <FormControl>
                         <div className=" flex flex-1 flex-col gap-3">
                           <Label className="  text-gray-500">Present Job</Label>
-                          <Input {...field} />
+                          <Input {...field} value={field.value ?? ""} />{" "}
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -514,7 +528,7 @@ const page = () => {
                     <FormControl>
                       <div className="  flex flex-1 flex-col gap-3">
                         <Label className="  text-gray-500">Lastname</Label>
-                        <Input {...field} />
+                        <Input {...field} value={field.value ?? ""} />{" "}
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -530,7 +544,7 @@ const page = () => {
                     <FormControl>
                       <div className="  flex flex-1 flex-col gap-3">
                         <Label className="  text-gray-500">Firstname</Label>
-                        <Input {...field} />
+                        <Input {...field} value={field.value ?? ""} />{" "}
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -545,7 +559,7 @@ const page = () => {
                     <FormControl>
                       <div className="  flex flex-1 flex-col gap-3">
                         <Label className="  text-gray-500">Middlename</Label>
-                        <Input {...field} />
+                        <Input {...field} value={field.value ?? ""} />{" "}
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -567,7 +581,7 @@ const page = () => {
                     <FormControl>
                       <div className="  flex flex-1 flex-col gap-3">
                         <Label className="  text-gray-500">Lastname</Label>
-                        <Input {...field} />
+                        <Input {...field} value={field.value ?? ""} />{" "}
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -582,7 +596,7 @@ const page = () => {
                     <FormControl>
                       <div className="  flex flex-1 flex-col gap-3">
                         <Label className="  text-gray-500">Firstname</Label>
-                        <Input {...field} />
+                        <Input {...field} value={field.value ?? ""} />{" "}
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -597,7 +611,7 @@ const page = () => {
                     <FormControl>
                       <div className="  flex flex-1 flex-col gap-3">
                         <Label className="  text-gray-500">Middlename</Label>
-                        <Input {...field} />
+                        <Input {...field} value={field.value ?? ""} />{" "}
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -619,7 +633,7 @@ const page = () => {
                     <FormControl>
                       <div className="  flex flex-1 flex-col gap-3">
                         <Label className="  text-gray-500">Lastname</Label>
-                        <Input {...field} />
+                        <Input {...field} value={field.value ?? ""} />{" "}
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -634,7 +648,7 @@ const page = () => {
                     <FormControl>
                       <div className="  flex flex-1 flex-col gap-3">
                         <Label className="  text-gray-500">Firstname</Label>
-                        <Input {...field} />
+                        <Input {...field} value={field.value ?? ""} />{" "}
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -649,7 +663,7 @@ const page = () => {
                     <FormControl>
                       <div className="  flex flex-1 flex-col gap-3">
                         <Label className="  text-gray-500">Middlename</Label>
-                        <Input {...field} />
+                        <Input {...field} value={field.value ?? ""} />{" "}
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -798,7 +812,7 @@ const page = () => {
                       <Label className="   text-gray-500">
                         Previous Religion
                       </Label>
-                      <Input {...field} />
+                      <Input {...field} value={field.value ?? ""} />{" "}
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -816,7 +830,7 @@ const page = () => {
                       <Label className="   text-gray-500">
                         Person leads you to the LORD
                       </Label>
-                      <Input {...field} />
+                      <Input {...field} value={field.value ?? ""} />{" "}
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -885,7 +899,7 @@ const page = () => {
                   <FormControl>
                     <div className=" flex flex-1 flex-col gap-3">
                       <Label className="  text-gray-500">
-                        Date water baptized
+                        Date Spirit baptized
                       </Label>
                       <CalendarCustom field={field} />
                     </div>
@@ -902,7 +916,7 @@ const page = () => {
           <div className=" flex gap-10">
             <FormField
               control={form.control}
-              name="formFilledUpBy"
+              name="formFilledUpByWho"
               render={({ field }) => (
                 <FormItem className="flex-1">
                   <FormControl>
@@ -910,7 +924,7 @@ const page = () => {
                       <Label className="  text-gray-500">
                         form Filled up By:
                       </Label>
-                      <Input {...field} />
+                      <Input {...field} value={field.value ?? ""} />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -941,7 +955,7 @@ const page = () => {
                   <FormControl>
                     <div className="  flex flex-1 flex-col gap-3">
                       <Label className="  text-gray-500">Verified :</Label>
-                      <Input {...field} />
+                      <Input {...field} value={field.value ?? ""} />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -957,7 +971,7 @@ const page = () => {
                   <FormControl>
                     <div className="  flex flex-1 flex-col gap-3">
                       <Label className="  text-gray-500">Noted:</Label>
-                      <Input {...field} />
+                      <Input {...field} value={field.value ?? ""} />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -972,7 +986,7 @@ const page = () => {
                   <FormControl>
                     <div className="  flex flex-1 flex-col gap-3">
                       <Label className="  text-gray-500">Encoded:</Label>
-                      <Input {...field} />
+                      <Input {...field} value={field.value ?? ""} />
                     </div>
                   </FormControl>
                   <FormMessage />

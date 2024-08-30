@@ -7,7 +7,12 @@ interface RadioButtonProps {
 
 const RadioButton = ({ field }: RadioButtonProps) => {
   return (
-    <RadioGroup {...field} value={field.value} onValueChange={field.onChange}>
+    <RadioGroup
+      {...field}
+      defaultValue=""
+      value={field.value}
+      onValueChange={field.onChange}
+    >
       <div className="flex items-center space-x-2">
         <RadioGroupItem value="MALE" id="r1" />
         <Label htmlFor="r1">MALE</Label>

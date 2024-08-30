@@ -1,71 +1,63 @@
 import { z } from "zod";
 
 const childSchema = z.object({
-  firstName: z
-    .string()
-    .min(2, {
-      message: "First name must be at least 2 characters.",
-    })
-    .optional(),
+  firstName: z.string().optional(),
+
   middleName: z.string().optional(),
-  lastName: z
-    .string()
-    .min(2, {
-      message: "Last name must be at least 2 characters.",
-    })
-    .optional(),
+  lastName: z.string().optional(),
 });
 
 const jobSchema = z.object({
   experience: z.string().optional(),
 });
 export const addFormschema = z.object({
+  id: z.number().optional(),
   firstName: z.string().min(2, {
     message: " must be at least 2 characters.",
   }),
   middleName: z.string().optional(),
   lastName: z.string(),
-  dateofBirth: z.date().optional(),
-  placeOfbirth: z.string().optional(),
-  presentAddress: z.string().optional(),
+  dateofBirth: z.date(),
+  placeOfbirth: z.string().optional().nullish(),
+  presentAddress: z.string().optional().nullish(),
 
   sex: z.string().min(1, {
     message: "required",
   }),
-  weight: z.string().optional(),
-  height: z.string().optional(),
-  bloodType: z.string().optional(),
+  weight: z.string().optional().nullish(),
+  height: z.string().optional().nullish(),
+  bloodType: z.string().optional().nullish(),
   maritalStatus: z.string().min(1, {
     message: "required",
   }),
-  citizenship: z.string().optional(),
-  cellphoneNumber: z.string().optional(),
-  homeTelephoneNumber: z.string().optional(),
-  email: z.string().optional(),
+  citizenship: z.string().optional().nullish(),
+  cellphoneNumber: z.string().optional().nullish(),
+  homeTelephoneNumber: z.string().optional().nullish(),
+  email: z.string().optional().nullish(),
   educationalAttainment: z.string().min(1, {
     message: "required",
   }),
-  occupation: z.string().optional(),
-  fatherFirstName: z.string().optional(),
-  fatherMiddleName: z.string().optional(),
-  fatherLastName: z.string().optional(),
-  motherFirstName: z.string().optional(),
-  motherMiddleName: z.string().optional(),
-  motherLastName: z.string().optional(),
-  spouseFirstName: z.string().optional(),
-  spouseMiddleName: z.string().optional(),
-  spouseLastName: z.string().optional(),
+  occupation: z.string().optional().nullish(),
+  fatherFirstName: z.string().optional().nullish(),
+  fatherMiddleName: z.string().optional().nullish(),
+  fatherLastName: z.string().optional().nullish(),
+  motherFirstName: z.string().optional().nullish(),
+  motherMiddleName: z.string().optional().nullish(),
+  motherLastName: z.string().optional().nullish(),
+  spouseFirstName: z.string().optional().nullish(),
+  spouseMiddleName: z.string().optional().nullish(),
+  spouseLastName: z.string().optional().nullish(),
   nameOfChildrenAndAge: z.array(childSchema).optional(),
   jobExperience: z.array(jobSchema).optional(),
-  previousReligion: z.string().optional(),
-  personLedYouToTheLord: z.string().optional(),
-  dateAcceptedTheLord: z.date().optional(),
-  firstDayOfChurchAttendance: z.date().optional(),
-  dateWaterBaptized: z.date().optional(),
-  dateSpiritBaptized: z.date().optional(),
-  formFilledUpBy: z.string().optional(),
-  dateFilledUp: z.date().optional(),
-  verified: z.string().optional(),
-  noted: z.string().optional(),
-  encoded: z.string().optional(),
+  previousReligion: z.string().optional().nullish(),
+  personLedYouToTheLord: z.string().optional().nullish(),
+  dateAcceptedTheLord: z.date().optional().nullish(),
+  firstDayOfChurchAttendance: z.date().optional().nullish(),
+  dateWaterBaptized: z.date().optional().nullish(),
+  dateSpiritBaptized: z.date().optional().nullish(),
+  formFilledUpByWho: z.string().optional().nullish(),
+  dateFilledUp: z.date().optional().nullish(),
+  verified: z.string().optional().nullish(),
+  noted: z.string().optional().nullish(),
+  encoded: z.string().optional().nullish(),
 });

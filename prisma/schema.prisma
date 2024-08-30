@@ -64,13 +64,14 @@ model Members{
     dateSpiritBaptized         DateTime?
     attendance                 AttendanceMembers[]
     formFilledUpBy             FormFilledUpBy?
+    status                    status @default(ACTIVE)
 
                      
 }
 
 model FormFilledUpBy {
     id                         Int      @id @default(autoincrement())
-    formFilledUpBy             String?
+    formFilledUpByWho          String?
     dateFilledUp               DateTime?
     idNo                       String?
     verified                   String?
@@ -84,8 +85,8 @@ model FormFilledUpBy {
 
 model Attendance {
     id                         Int      @id @default(autoincrement())
-    attendanceName             String   @default("SundayService")
-    date                       DateTime
+    attendanceName             String   @default("Sunday Service")
+    date                       DateTime @unique
     members                    AttendanceMembers[]
 }
 model AttendanceMembers {
@@ -97,7 +98,11 @@ model AttendanceMembers {
     attendance                 Attendance @relation(fields: [attendanceId], references: [id])
 
     @@unique([memberId, attendanceId])
-}
+}   
+
+
+
+
 enum GENDER {
     MALE
     FEMALE
@@ -120,3 +125,12 @@ SENIORHIGH
 COLLEGE
 DEGREE_HOLDER
 }
+
+enum status {
+  
+ACTIVE
+DEACTIVE
+}
+
+
+

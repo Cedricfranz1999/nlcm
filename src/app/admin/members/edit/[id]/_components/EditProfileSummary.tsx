@@ -122,7 +122,10 @@ const EditProfileSummary = ({ data }: { data: ProjectMembers | undefined }) => {
         <div className=" flex  flex-col gap-3">
           <Label className="  text-gray-400">Blood Type</Label>
           {data?.weight ? (
-            <SelectDropdownBloodType blood={data.bloodType || ""} />
+            <SelectDropdownBloodType
+              blood={data.bloodType || ""}
+              field={undefined}
+            />
           ) : (
             <DataNotFound />
           )}
@@ -145,14 +148,17 @@ const EditProfileSummary = ({ data }: { data: ProjectMembers | undefined }) => {
         </div>
         <div className=" flex  flex-col gap-6">
           <Label></Label>
-          <CalendarCustom />
+          <CalendarCustom field={undefined} />
         </div>
       </div>
       <div className=" flex  items-center justify-start  gap-10">
         <div className=" flex  flex-col gap-3">
           <Label className="  text-gray-400">Marital Status</Label>
 
-          <SelectMaritalStatus status={data?.maritalStatus || ""} />
+          <SelectMaritalStatus
+            status={data?.maritalStatus || ""}
+            field={undefined}
+          />
         </div>
         <div className=" flex  flex-col gap-3">
           <Label className="  text-gray-400">Citizenship</Label>
@@ -209,6 +215,7 @@ const EditProfileSummary = ({ data }: { data: ProjectMembers | undefined }) => {
           {data?.educationalAttainment ? (
             <SelectEducationAttainment
               attainment={data.educationalAttainment}
+              field={undefined}
             />
           ) : (
             <DataNotFound />
