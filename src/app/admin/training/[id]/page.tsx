@@ -20,20 +20,16 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { useToast } from "~/components/ui/use-toast";
-import { Input } from "~/components/ui/input";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { toast } = useToast();
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
-  const [search, setSearch] = React.useState("");
-
   const {
     data: getAttendance,
     isLoading,
     refetch: refetchAttendance,
-  } = api.attendance.getAttendanceMemberInSelectedDate.useQuery({
+  } = api.training.getTraineeMemberInSelectedTraining.useQuery({
     attendanceId: parseInt(params.id),
-    search: search,
   });
 
   const defaultValue =
@@ -43,7 +39,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const [selectedValues, setSelectedValues] = React.useState<string[]>([]);
   const { data: allMembers, refetch } = api.attendance.getAllmembers.useQuery();
 
-  const { data: getDate } = api.attendance.getAttendanceSpecificDate.useQuery({
+  const { data: getDate } = api.training.getTrainingSpecificName.useQuery({
     attendanceId: parseInt(params.id),
   });
 
@@ -70,7 +66,7 @@ const Page = ({ params }: { params: { id: string } }) => {
       value: String(data.id),
     };
   });
-  const addAttendance = api.attendance.addMembersInAttendance.useMutation({
+  const addAttendance = api.training.addMembersInTraining.useMutation({
     onSuccess: () => {
       toast({
         title: "Successfully added new atteandance",
@@ -83,7 +79,7 @@ const Page = ({ params }: { params: { id: string } }) => {
     setIsPopoverOpen(false);
     await addAttendance.mutateAsync({
       data: selectedValues.map((data) => {
-        return { memberId: parseInt(data), attendanceId: parseInt(params.id) };
+        return { memberId: parseInt(data), trainingId: parseInt(params.id) };
       }),
       attendanceId: parseInt(params.id),
     });
@@ -100,41 +96,30 @@ const Page = ({ params }: { params: { id: string } }) => {
           <p>loading....</p>
         </div>
       ) : (
-        <div className="  flex h-screen w-full flex-col items-start  justify-start p-10">
-          <div className=" flex w-full items-center justify-between ">
-            <div className="       mb-10  rounded-md bg-teal-700 text-white">
-              <MultiSelect
-                options={data || []}
-                defaultValue={defaultValue}
-                onValueChange={(value: string[]) => {}}
-                onSubmit1={handleSubmit1}
-                isPopoverOpen={isPopoverOpen}
-                setIsPopoverOpen={setIsPopoverOpen}
-                selectedValues={selectedValues}
-                setSelectedValues={setSelectedValues}
-              />
-            </div>
-            <Badge className=" mb-20 text-2xl">
-              {getDate
-                ? format(new Date(getDate.date), "MMMM dd, yyyy")
-                : "Date not available"}
-            </Badge>
+        <div className="flex h-screen w-full flex-col items-start  justify-start p-10">
+          <div className=" flex w-full items-center ">
+            <Badge className=" mb-20 text-2xl">{getDate?.trainingName}</Badge>
           </div>
-
-          <Input
-            className="  my-4 mb-3  mt-14 w-72"
-            placeholder=" search members"
-            value={search}
-          ></Input>
-
+          <div className="">
+            <MultiSelect
+              options={data || []}
+              defaultValue={defaultValue}
+              onValueChange={(value: string[]) => {}}
+              onSubmit1={handleSubmit1}
+              isPopoverOpen={isPopoverOpen}
+              setIsPopoverOpen={setIsPopoverOpen}
+              selectedValues={selectedValues}
+              setSelectedValues={setSelectedValues}
+            />
+          </div>
           <Table>
-            <TableCaption>A list attendance of members.</TableCaption>
+            <TableCaption>A list training of members.</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead>Firstname</TableHead>
                 <TableHead>Middlename</TableHead>
                 <TableHead>Lastname</TableHead>
-                <TableHead>Time</TableHead>
+                <TableHead>status</TableHead>
 
                 <TableHead>Action</TableHead>
               </TableRow>
@@ -152,9 +137,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                     {atteandance?.member.lastName}
                   </TableCell>
                   <TableCell className="font-medium">
-                    {atteandance?.createdAt
-                      ? format(new Date(atteandance.createdAt), "hh:mm a")
-                      : ""}
+                    <Badge> {atteandance?.status}</Badge>
                   </TableCell>
                   <TableCell className="font-medium">
                     <Link

@@ -2,12 +2,12 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
-export const attendanceRouter = createTRPCRouter({
-  getAllAttendanceList: publicProcedure.query(({ ctx, input }) => {
-    return ctx.db.attendance.findMany({
+export const trainingRouter = createTRPCRouter({
+  getAllTrainingList: publicProcedure.query(({ ctx, input }) => {
+    return ctx.db.training.findMany({
       select: {
         id: true,
-        attendanceName: true,
+        trainingName: true,
         date: true,
         _count: {
           select: {
@@ -21,55 +21,36 @@ export const attendanceRouter = createTRPCRouter({
     });
   }),
 
-  getAttendanceSpecificDate: publicProcedure
+  getTrainingSpecificName: publicProcedure
     .input(
       z.object({
         attendanceId: z.number(),
       }),
     )
     .query(({ ctx, input }) => {
-      return ctx.db.attendance.findFirst({
+      return ctx.db.training.findFirst({
         where: {
           id: input.attendanceId,
         },
         select: {
-          date: true,
+          trainingName: true,
         },
       });
     }),
 
-  getAttendanceMemberInSelectedDate: publicProcedure
+  getTraineeMemberInSelectedTraining: publicProcedure
     .input(
       z.object({
         attendanceId: z.number(),
-        search: z.string(),
       }),
     )
     .query(({ ctx, input }) => {
-      return ctx.db.attendanceMembers.findMany({
+      return ctx.db.trainingMembers.findMany({
         where: {
-          attendanceId: input.attendanceId,
-          member: input.search
-            ? {
-                OR: [
-                  {
-                    firstName: {
-                      contains: input.search,
-                      mode: "insensitive", // Optional: Makes the search case-insensitive
-                    },
-                  },
-                  {
-                    lastName: {
-                      contains: input.search,
-                      mode: "insensitive", // Optional: Makes the search case-insensitive
-                    },
-                  },
-                ],
-              }
-            : undefined, // No filter when search is empty
+          trainingId: input.attendanceId,
         },
         select: {
-          createdAt: true,
+          status: true,
           member: {
             select: {
               id: true,
@@ -79,13 +60,10 @@ export const attendanceRouter = createTRPCRouter({
             },
           },
         },
-        orderBy: {
-          createdAt: "desc", // or 'desc' for descending order
-        },
       });
     }),
 
-  addAttendance: publicProcedure
+  addTraining: publicProcedure
     .input(
       z.object({
         name: z.string(),
@@ -93,21 +71,39 @@ export const attendanceRouter = createTRPCRouter({
       }),
     )
     .mutation(({ ctx, input }) => {
-      return ctx.db.attendance.create({
+      return ctx.db.training.create({
         data: {
-          attendanceName: input.name,
+          trainingName: input.name,
           date: input.attendaceDate,
         },
       });
     }),
 
-  addMembersInAttendance: publicProcedure
+  updateStatusofTrainee: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        status: z.string(),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.db.trainingMembers.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          status: "GRADUATE",
+        },
+      });
+    }),
+
+  addMembersInTraining: publicProcedure
     .input(
       z.object({
         data: z.array(
           z.object({
             memberId: z.number(),
-            attendanceId: z.number(),
+            trainingId: z.number(),
           }),
         ),
         attendanceId: z.number(),
@@ -115,35 +111,35 @@ export const attendanceRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const validData = input.data.filter(
-        (item) => item.memberId && item.attendanceId,
+        (item) => item.memberId && item.trainingId,
       );
 
       const attendanceIds = [
-        ...new Set(validData.map((item) => item.attendanceId)),
+        ...new Set(validData.map((item) => item.trainingId)),
       ];
 
-      const existingEntries = await ctx.db.attendanceMembers.findMany({
+      const existingEntries = await ctx.db.trainingMembers.findMany({
         where: {
-          attendanceId: { in: attendanceIds },
+          trainingId: { in: attendanceIds },
         },
       });
 
-      const allEntries = await ctx.db.attendanceMembers.findMany({
+      const allEntries = await ctx.db.trainingMembers.findMany({
         where: {
-          attendanceId: input.attendanceId,
+          trainingId: input.attendanceId,
         },
       });
 
       if (validData.length === 0) {
         // Extract the attendanceIds from all entries
         const attendanceIdsToDelete = allEntries.map(
-          (entry) => entry.attendanceId,
+          (entry) => entry.trainingId,
         );
 
         // Delete all entries matching the attendanceId
-        await ctx.db.attendanceMembers.deleteMany({
+        await ctx.db.trainingMembers.deleteMany({
           where: {
-            attendanceId: { in: attendanceIdsToDelete },
+            trainingId: { in: attendanceIdsToDelete },
           },
         });
 
@@ -156,30 +152,28 @@ export const attendanceRouter = createTRPCRouter({
 
       // Create sets for comparison
       const inputPairs = new Set(
-        validData.map((item) => `${item.memberId}-${item.attendanceId}`),
+        validData.map((item) => `${item.memberId}-${item.trainingId}`),
       );
 
       const existingPairs = new Set(
-        existingEntries.map(
-          (entry) => `${entry.memberId}-${entry.attendanceId}`,
-        ),
+        existingEntries.map((entry) => `${entry.memberId}-${entry.trainingId}`),
       );
 
       // Find new entries to add
       const newEntries = validData.filter(
-        (item) => !existingPairs.has(`${item.memberId}-${item.attendanceId}`),
+        (item) => !existingPairs.has(`${item.memberId}-${item.trainingId}`),
       );
 
       // Add new entries if any
       if (newEntries.length > 0) {
-        await ctx.db.attendanceMembers.createMany({
+        await ctx.db.trainingMembers.createMany({
           data: newEntries,
         });
       }
 
       // Find entries to delete (those not in the input)
       const entriesToDelete = existingEntries.filter(
-        (entry) => !inputPairs.has(`${entry.memberId}-${entry.attendanceId}`),
+        (entry) => !inputPairs.has(`${entry.memberId}-${entry.trainingId}`),
       );
 
       // Delete entries if any
@@ -188,7 +182,7 @@ export const attendanceRouter = createTRPCRouter({
           where: {
             OR: entriesToDelete.map((entry) => ({
               memberId: entry.memberId,
-              attendanceId: entry.attendanceId,
+              trainingId: entry.trainingId,
             })),
           },
         });

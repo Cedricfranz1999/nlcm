@@ -20,6 +20,14 @@ model Post {
 }
 
 
+model Admin {
+  id        Int    @id @default(autoincrement())
+  username  String @unique
+  password  String
+}
+
+
+
 
 model Members{
     
@@ -63,6 +71,7 @@ model Members{
     dateWaterBaptized          DateTime?
     dateSpiritBaptized         DateTime?
     attendance                 AttendanceMembers[]
+    training                   TrainingMembers[]
     formFilledUpBy             FormFilledUpBy?
     status                    status @default(ACTIVE)
 
@@ -96,11 +105,29 @@ model AttendanceMembers {
 
     member                     Members   @relation(fields: [memberId], references: [id])
     attendance                 Attendance @relation(fields: [attendanceId], references: [id])
+    createdAt DateTime @default(now())
 
     @@unique([memberId, attendanceId])
 }   
 
 
+model Training {
+    id                         Int      @id @default(autoincrement())
+    trainingName               String 
+    date                       DateTime @unique
+    members                    TrainingMembers[]
+}
+
+model TrainingMembers {
+    id                         Int      @id @default(autoincrement())
+    memberId                   Int
+    trainingId                 Int
+    status                     trainingStatus?  @default(TRAINEE)
+    member                     Members   @relation(fields: [memberId], references: [id])
+    attendance                 Training @relation(fields: [trainingId], references: [id])
+
+    @@unique([memberId, trainingId])
+}   
 
 
 enum GENDER {
@@ -130,6 +157,12 @@ enum status {
   
 ACTIVE
 DEACTIVE
+}
+
+enum trainingStatus {
+  
+GRADUATE
+TRAINEE
 }
 
 

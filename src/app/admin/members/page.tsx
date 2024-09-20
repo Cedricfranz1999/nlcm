@@ -28,7 +28,7 @@ const page = () => {
   const { data, refetch } = api.members.getAllmembers.useQuery();
 
   return (
-    <div>
+    <div className="max-h-[850px] overflow-scroll">
       <Button
         className=" float-right   my-5"
         onClick={() => router.push("/admin/members/add")}

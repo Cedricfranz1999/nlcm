@@ -128,7 +128,7 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
           <div className=" flex items-center gap-5 ">
             <div className="    flex  w-72    whitespace-nowrap">
               {" "}
-              <Label className=" mr-5   text-2xl font-semibold  tracking-wider">
+              <Label className=" mb-4  mr-5  text-2xl font-semibold  tracking-wider">
                 {" "}
                 List of Childrens:
               </Label>
@@ -144,7 +144,7 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
             }[]
           )?.map((child, index) => (
             <div
-              className={`bg-red-20 flex items-center gap-5 ${child.firstName && child.lastName ? "" : "hidden"}`}
+              className={`bg-red-20 flex items-start gap-5 ${child.firstName && child.lastName ? "" : "hidden"}`}
             >
               <div className="    List of Childrens flex w-72     whitespace-nowrap">
                 {" "}
@@ -304,7 +304,7 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
         </div>
       </div>
       <div
-        className={`   flex w-full items-center    gap-10 ${data?.formFilledUpBy ? "" : "hidden"} `}
+        className={`   flex w-full flex-col    items-start gap-10 ${data?.formFilledUpBy ? "" : "hidden"} `}
       >
         <div className=" flex   flex-col">
           <Label className=" mr-5   text-xl font-semibold  ">ID NO:</Label>
@@ -320,9 +320,9 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
           <Label className=" mr-5   gap-2 text-xl   font-semibold">
             Form filled up by:
           </Label>
-          {data?.formFilledUpBy?.formFilledUpBy ? (
+          {data?.formFilledUpBy?.formFilledUpByWho ? (
             <Label className=" gap-2  text-xl font-light  tracking-wider">
-              {data?.formFilledUpBy?.formFilledUpBy}
+              {data?.formFilledUpBy?.formFilledUpByWho}
             </Label>
           ) : (
             <DataNotFound />

@@ -120,8 +120,8 @@ interface MultiSelectProps
   onSubmit1?: () => void;
   isPopoverOpen: boolean;
   setIsPopoverOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedValues1: React.Dispatch<React.SetStateAction<string[]>>;
-  selectedValues1: string[];
+  setSelectedValues: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedValues: string[];
 }
 
 export const MultiSelect = React.forwardRef<
@@ -135,7 +135,7 @@ export const MultiSelect = React.forwardRef<
       variant,
 
       defaultValue = [],
-      placeholder = "Select Members",
+      placeholder = "Attendance Members",
       animation = 0,
       maxCount = 3,
       modalPopover = false,
@@ -144,20 +144,13 @@ export const MultiSelect = React.forwardRef<
       onSubmit1,
       isPopoverOpen,
       setIsPopoverOpen,
-      selectedValues1,
-      setSelectedValues1,
+      selectedValues,
+      setSelectedValues,
       ...props
     },
     ref,
   ) => {
-    const [selectedValues, setSelectedValues] =
-      React.useState<string[]>(defaultValue);
-
     const [isAnimating, setIsAnimating] = React.useState(false);
-
-    React.useEffect(() => {
-      setSelectedValues(defaultValue);
-    }, [defaultValue]);
 
     const handleInputKeyDown = (
       event: React.KeyboardEvent<HTMLInputElement>,
@@ -227,13 +220,13 @@ export const MultiSelect = React.forwardRef<
           >
             {selectedValues.length > 0 ? (
               <div className="flex w-full items-center justify-between">
-                <span className="mx-3 text-sm text-muted-foreground">
+                <span className="mx-3 text-sm text-muted-foreground text-white">
                   {placeholder}
                 </span>
               </div>
             ) : (
               <div className="mx-auto flex w-full items-center justify-between">
-                <span className="mx-3 text-sm text-muted-foreground">
+                <span className="mx-3 text-sm text-muted-foreground text-white">
                   {placeholder}
                 </span>
                 <ChevronDown className="mx-2 h-4 cursor-pointer text-muted-foreground" />
