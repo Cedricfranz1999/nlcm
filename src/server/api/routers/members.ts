@@ -224,10 +224,10 @@ export const membersRouter = createTRPCRouter({
         })
         .then((updatedMember) => {
           if (
-            formFilledUpByWho ||
-            dateFilledUp ||
-            verified ||
-            noted ||
+            formFilledUpByWho ??
+            dateFilledUp ??
+            verified ??
+            noted ??
             encoded
           ) {
             return ctx.db.formFilledUpBy.update({

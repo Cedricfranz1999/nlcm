@@ -23,7 +23,7 @@ import PopoverViewImage from "./(components)/popoverViewImage";
 import { number } from "zod";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const { data, refetch } = api.members.getAllmembers.useQuery();
 
@@ -84,4 +84,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

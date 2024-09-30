@@ -367,9 +367,9 @@ const EditOtherInformation = ({
           <Label className=" mr-5   gap-2 text-xl   font-semibold">
             Form filled up by:
           </Label>
-          {data?.formFilledUpBy?.formFilledUpBy ? (
+          {data?.formFilledUpBy?.formFilledUpByWho ? (
             <Label className=" gap-2  text-xl font-light  tracking-wider">
-              {data?.formFilledUpBy?.formFilledUpBy}
+              {data?.formFilledUpBy?.formFilledUpByWho}
             </Label>
           ) : (
             <DataNotFound />

@@ -42,8 +42,10 @@ const addDateFormschema = z.object({
   attendaceDate: z.date(),
 });
 
-const page = () => {
-  const { toast } = useToast();
+
+const Page = () => {
+    const { toast } = useToast();
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const router = useRouter();
 
@@ -53,11 +55,11 @@ const page = () => {
   });
 
   const addAttendance = api.training.addTraining.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         title: "Successfully added new training",
       });
-      refetch();
+      await refetch();
     },
   });
 
@@ -189,4 +191,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

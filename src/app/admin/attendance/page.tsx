@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
@@ -34,6 +33,7 @@ import { useRouter } from "next/navigation";
 import { MultiSelect } from "~/components/ui/multi-select";
 import Link from "next/link";
 import _ from "lodash"; // Import Lodash
+import { useState } from "react";
 
 const addDateFormschema = z.object({
   name: z.string().min(2, {
@@ -42,10 +42,13 @@ const addDateFormschema = z.object({
   attendaceDate: z.date(),
 });
 
-const page = () => {
+
+const Page = () => {
   const { toast } = useToast();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(""); // State for search input
+
+
+  const [isDialogOpen, setIsDialogOpen] =useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
   const { data, refetch } = api.attendance.getAllAttendanceList.useQuery();
@@ -54,11 +57,11 @@ const page = () => {
   });
 
   const addAttendance = api.attendance.addAttendance.useMutation({
-    onSuccess: () => {
+    onSuccess:  async() => {
       toast({
         title: "Successfully added new attendance",
       });
-      refetch();
+      await refetch();
     },
   });
 
@@ -196,4 +199,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

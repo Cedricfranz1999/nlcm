@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import React from "react";
+import React, { useState } from "react";
 import DataNotFound from "~/app/_components/dataNotFound";
 import { Card } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
@@ -22,7 +22,7 @@ import SelectEducationAttainment from "../../../(components)/SelectEducationalAt
 type ProjectMembers = RouterOutputs["members"]["getAllmembersById"];
 
 const EditProfileSummary = ({ data }: { data: ProjectMembers | undefined }) => {
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
+  const [date, setDate] = useState<Date | undefined>(new Date());
 
   const formatDate = (
     date: string | Date | undefined,

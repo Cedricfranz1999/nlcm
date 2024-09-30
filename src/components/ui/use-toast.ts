@@ -24,6 +24,8 @@ const actionTypes = {
   DISMISS_TOAST: "DISMISS_TOAST",
   REMOVE_TOAST: "REMOVE_TOAST",
 } as const
+import { useState } from "react";
+
 
 let count = 0
 
@@ -172,7 +174,7 @@ function toast({ ...props }: Toast) {
 }
 
 function useToast() {
-  const [state, setState] = React.useState<State>(memoryState)
+  const [state, setState] = useState<State>(memoryState)
 
   React.useEffect(() => {
     listeners.push(setState)

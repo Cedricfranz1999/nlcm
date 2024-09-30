@@ -28,6 +28,8 @@ import {
   CommandList,
   CommandSeparator,
 } from "~/components/ui/command";
+import { useState } from "react";
+
 
 /**
  * Variants for the multi-select component to handle different styles.
@@ -140,9 +142,9 @@ export const MultiSelect = React.forwardRef<
     ref,
   ) => {
     const [selectedValues, setSelectedValues] =
-      React.useState<string[]>(defaultValue);
-    const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
-    const [isAnimating, setIsAnimating] = React.useState(false);
+      useState<string[]>(defaultValue);
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     React.useEffect(() => {
       setSelectedValues(defaultValue);

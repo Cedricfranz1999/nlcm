@@ -27,6 +27,8 @@ import {
   CommandSeparator,
 } from "~/components/ui/command";
 
+import { useState } from "react";
+
 /**
  * Variants for the multi-select component to handle different styles.
  * Uses class-variance-authority (cva) to define different styles based on "variant" prop.
@@ -150,7 +152,7 @@ export const MultiSelect = React.forwardRef<
     },
     ref,
   ) => {
-    const [isAnimating, setIsAnimating] = React.useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const handleInputKeyDown = (
       event: React.KeyboardEvent<HTMLInputElement>,
@@ -262,7 +264,7 @@ export const MultiSelect = React.forwardRef<
                 {options.map((option) => {
                   const IconComponent = option.icon;
                   return (
-                    <div className=" flex w-full items-center justify-between gap-10 px-4">
+                    <div key={option.value} className=" flex w-full items-center justify-between gap-10 px-4">
                       <CommandItem
                         key={option.value}
                         onSelect={() => toggleOption(option.value)}

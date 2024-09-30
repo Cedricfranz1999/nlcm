@@ -3,7 +3,6 @@
 import { format } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
@@ -21,11 +20,14 @@ import {
 } from "~/components/ui/table";
 import { useToast } from "~/components/ui/use-toast";
 import { Input } from "~/components/ui/input";
+import { useState ,useEffect} from "react";
+
+
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { toast } = useToast();
-  const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
-  const [search, setSearch] = React.useState("");
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   const {
     data: getAttendance,
@@ -39,8 +41,8 @@ const Page = ({ params }: { params: { id: string } }) => {
   const defaultValue =
     getAttendance?.map((data) => {
       return String(data.member.id);
-    }) || [];
-  const [selectedValues, setSelectedValues] = React.useState<string[]>([]);
+    }) ?? [];
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const { data: allMembers, refetch } = api.attendance.getAllmembers.useQuery();
 
   const { data: getDate } = api.attendance.getAttendanceSpecificDate.useQuery({
@@ -71,11 +73,11 @@ const Page = ({ params }: { params: { id: string } }) => {
     };
   });
   const addAttendance = api.attendance.addMembersInAttendance.useMutation({
-    onSuccess: () => {
+    onSuccess:  async () => {
       toast({
         title: "Successfully added new atteandance",
       });
-      refetch();
+    await  refetch();
     },
   });
 
@@ -87,9 +89,9 @@ const Page = ({ params }: { params: { id: string } }) => {
       }),
       attendanceId: parseInt(params.id),
     });
-    refetchAttendance();
+    await refetchAttendance();
   };
-  React.useEffect(() => {
+  useEffect(() => {
     setSelectedValues(defaultValue);
   }, [isPopoverOpen]);
 
@@ -104,7 +106,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           <div className=" flex w-full items-center justify-between ">
             <div className="       mb-10  rounded-md bg-teal-700 text-white">
               <MultiSelect
-                options={data || []}
+                options={data ?? []}
                 defaultValue={defaultValue}
                 onValueChange={(value: string[]) => {}}
                 onSubmit1={handleSubmit1}

@@ -23,7 +23,7 @@ import { useToast } from "~/components/ui/use-toast";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { toast } = useToast();
-  const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const {
     data: getAttendance,
     isLoading,
@@ -36,7 +36,7 @@ const Page = ({ params }: { params: { id: string } }) => {
     getAttendance?.map((data) => {
       return String(data.member.id);
     }) || [];
-  const [selectedValues, setSelectedValues] = React.useState<string[]>([]);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const { data: allMembers, refetch } = api.attendance.getAllmembers.useQuery();
 
   const { data: getDate } = api.training.getTrainingSpecificName.useQuery({
@@ -67,11 +67,11 @@ const Page = ({ params }: { params: { id: string } }) => {
     };
   });
   const addAttendance = api.training.addMembersInTraining.useMutation({
-    onSuccess: () => {
+    onSuccess:  async() => {
       toast({
         title: "Successfully added new atteandance",
       });
-      refetch();
+      await refetch();
     },
   });
 
@@ -83,7 +83,7 @@ const Page = ({ params }: { params: { id: string } }) => {
       }),
       attendanceId: parseInt(params.id),
     });
-    refetchAttendance();
+     await refetchAttendance();
   };
   React.useEffect(() => {
     setSelectedValues(defaultValue);

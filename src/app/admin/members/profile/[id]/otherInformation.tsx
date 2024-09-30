@@ -144,6 +144,7 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
             }[]
           )?.map((child, index) => (
             <div
+            key={index}
               className={`bg-red-20 flex items-start gap-5 ${child.firstName && child.lastName ? "" : "hidden"}`}
             >
               <div className="    List of Childrens flex w-72     whitespace-nowrap">
@@ -205,6 +206,7 @@ const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
             }[]
           )?.map((experience) => (
             <div
+            key={experience.id}
               className={` flex items-center gap-5  ${experience.description ? "" : "hidden"} `}
             >
               <div className="    List of Childrens flex w-72     whitespace-nowrap">

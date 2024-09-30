@@ -21,7 +21,6 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   const { toast } = useToast();
-
   const router = useRouter();
 
   // Mutation for login
@@ -32,18 +31,21 @@ const LoginForm = () => {
   } = api.login.loginUser.useMutation({
     onSuccess: (data) => {
       if (data.success) {
-        localStorage.setItem("username", username);
-        localStorage.setItem("password", password);
+        // Store credentials in localStorage if login is successful
+        if (typeof window !== "undefined") {
+          localStorage.setItem("username", username);
+          localStorage.setItem("password", password);
+        }
         router.push("/admin/dashboard");
       } else {
         toast({
-          title: "password or username is incorrect",
+          title: "Password or username is incorrect",
         });
       }
     },
     onError: (error) => {
       toast({
-        title: "password or username is incorrect",
+        title: "Password or username is incorrect",
       });
     },
   });
@@ -58,12 +60,15 @@ const LoginForm = () => {
     }
   };
 
-  const usernames = localStorage.getItem("username");
-  const passwords = localStorage.getItem("password");
-
   useEffect(() => {
-    if (usernames === "admin" || passwords === "admin") {
-      router.push("/admin/dashboard");
+    // Check localStorage for credentials in the browser
+    if (typeof window !== "undefined") {
+      const storedUsername = localStorage.getItem("username");
+      const storedPassword = localStorage.getItem("password");
+
+      if (storedUsername === "admin" && storedPassword === "admin") {
+        router.push("/admin/dashboard");
+      }
     }
   }, [router]);
 

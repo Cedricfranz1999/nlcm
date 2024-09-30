@@ -73,8 +73,12 @@ const Page = () => {
     },
   } satisfies ChartConfig;
 
-  React.useEffect(() => {
-    refetch();
+  const refetchFunction =  async() => {
+    await refetch()
+  }
+
+  React.useEffect( () => {
+     refetchFunction()
   }, [date]);
   return (
     <div className="relative">

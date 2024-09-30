@@ -765,6 +765,7 @@ const page = ({ params }: { params: { id: string } }) => {
                 }[]
               ).map((child, index) => (
                 <Card
+                key={index}
                   // key={child.id}
                   className="flex min-w-[500px] flex-col gap-5 px-5 py-10"
                 >
@@ -846,7 +847,7 @@ const page = ({ params }: { params: { id: string } }) => {
                 }[]
               ).map((experience, index) => (
                 <Card
-                  // key={experience.id}
+                  key={index}
                   className="flex min-w-[500px]  flex-col gap-5 px-5 py-10"
                 >
                   <div className="flex w-full justify-center">

@@ -123,8 +123,8 @@ const Sidebar = () => {
               <CardTitle className="mb-3 text-lg">- 2 TIMOTHY 1:7</CardTitle>
               <CardDescription>
                 <Label className="text-xs tracking-widest">
-                  "For God gave us a spirit not of fear but of power and love
-                  and self-control."
+                  For God gave us a spirit not of fear but of power and love
+                  and self-control.
                 </Label>
               </CardDescription>
             </CardHeader>

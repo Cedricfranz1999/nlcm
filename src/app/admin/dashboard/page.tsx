@@ -5,7 +5,7 @@ import { FileDigit, NotepadText } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const { data: dashboardData } = api.dashboard.getDashboardData.useQuery();
   const { data: memberDataWithoutAttendanceForOneMonth } =
@@ -15,7 +15,6 @@ const page = () => {
     return { title: data.title, count: data.count, path: data.path };
   });
 
-  console.log("WWWWWWW");
 
   return (
     <div className="bg-blue-50 p-20">
@@ -39,4 +38,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
