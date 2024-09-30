@@ -16,8 +16,6 @@ export const loginRouter = createTRPCRouter({
         where: { username: input.username },
       });
 
-      console.log("TITWTIW", user);
-
       if (!user) {
         return { success: false, message: "User not found" };
       }
@@ -28,7 +26,6 @@ export const loginRouter = createTRPCRouter({
         user.password,
       );
 
-      console.log("TITWTIW", isPasswordValid);
 
       if (input.password === user.password) {
         return { success: true };

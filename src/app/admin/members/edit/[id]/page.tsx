@@ -67,9 +67,6 @@ const page = ({ params }: { params: { id: string } }) => {
     //   accountType: "AGENT",
     // },
   });
-  console.log("====================================");
-  console.log(form.formState.errors);
-  console.log("====================================");
 
   const handleSubmit = async (data: z.infer<typeof addFormschema>) => {
     const jobExperience =

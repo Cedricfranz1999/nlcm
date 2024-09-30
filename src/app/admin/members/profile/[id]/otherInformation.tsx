@@ -8,8 +8,6 @@ import { db } from "~/server/db";
 import dayjs from "dayjs";
 
 const OtherInformation = ({ data }: { data: ProjectMembers | undefined }) => {
-  console.log("WOSSSHIE ", data?.nameOfChildrenAndAge);
-
   const formatDate = (
     date: string | Date | undefined,
   ): { formattedDate: string; age: number } => {

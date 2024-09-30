@@ -65,7 +65,6 @@ const Page = () => {
     // },
   });
 
-  console.log("error", form.formState.errors);
 
   const handleSubmit = async (data: z.infer<typeof addFormschema>) => {
     const jobExperience =
@@ -123,8 +122,6 @@ const Page = () => {
       encoded: data.encoded ?? "",
       presentAddress: data.presentAddress,
     });
-
-    console.log("hello");
   };
 
   const addChild = () => {
